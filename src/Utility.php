@@ -257,7 +257,7 @@ function checkSoftFork($softForks){
 				continue;
 			}
 			$sf['status'] = ucfirst(preg_replace("/[^A-Za-z]/", '', $sf['bip9']['status']));
-			$sf['startTime'] = date("Y-m-d",$sf['bip9']['startTime']);
+			$sf['start_time'] = date("Y-m-d",$sf['bip9']['start_time']);
 			$sf['timeout'] = date("Y-m-d",$sf['bip9']['timeout']);
 			$sf['since'] = checkInt($sf['bip9']['since']);
 			if(isset($sf['bip9']['statistics'])){
