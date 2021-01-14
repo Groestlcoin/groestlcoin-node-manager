@@ -2,7 +2,7 @@
 
 namespace App;
 
-class Peer{	
+class Peer{
   public $id; // int
   public $ip; // string
   public $ipOriginal;
@@ -10,7 +10,7 @@ class Peer{
   public $services; // string
   public $servicesOriginal; // string
   public $relayTx; // bool
-  public $feeFilter; // int (BTC)
+  public $feeFilter; // int (GRS)
   public $lastSend;  // int (seconds)
   public $lastReceived;  // int (seconds)
   public $trafficOut; // int (MB)
@@ -39,7 +39,7 @@ class Peer{
   public $countryCode; // string
   public $isp; // string
   public $hosted; // bool
-	
+
   function __construct($peer) {
     $this->id = checkInt($peer["id"]);
     $this->ip = getCleanIP($peer["addr"]);
@@ -93,7 +93,7 @@ class Peer{
     }
 
     $this->bytessentPerMsg = checkArray($peer["bytessent_per_msg"]);
-    $this->bytesrecvPerMsg = checkArray($peer["bytesrecv_per_msg"]);		
-  }			
+    $this->bytesrecvPerMsg = checkArray($peer["bytesrecv_per_msg"]);
+  }
 }
 ?>

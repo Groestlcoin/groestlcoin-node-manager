@@ -1,4 +1,4 @@
-# Bitcoin Node Manager Changelog
+# Groestlcoin Node Manager Changelog
 
 ## 1.1.0 - 2020-12-19
 
@@ -20,7 +20,7 @@ Three years after the first release, 1.0.0 is finally out :partying_face:
 - [**Improved**] Link to block explorer that displays forks
 - [**Improved**] Updated hoster detection list
 - [**Improved**] Dynamic services detection
-- [**Fixed**] Compatibility with Bitcoin Core 0.20.1
+- [**Fixed**] Compatibility with Groestlcoin Core 2.20.1
 - [**Fixed**] Country flag icons
 - [**Fixed**] Compatibility with IP-API.com limits
 - [**Fixed**] Peer geo data

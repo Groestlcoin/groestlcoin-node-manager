@@ -1,5 +1,5 @@
 		  <!-- Top Info Bar -->
-		 <div class="panel panel-default">  
+		 <div class="panel panel-default">
 			<div class="panel-body">
 				<div class="row tile_count">
 					<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -37,7 +37,7 @@
       </div>
       <?php } ?>
       <!-- Message End -->
-			<!-- Content -->				   
+			<!-- Content -->
 			<div class="row">
 			<!-- Peer List -->
 			  <div class="col-md-12 col-sm-12 col-xs-12">
@@ -75,19 +75,19 @@
 							foreach($content['blocks'] as $block){ ?>
 								<tr>
 									<td><?= $block['height'] ?></td>
-									<td><?= $block["hash"] ?></td>   
+									<td><?= $block["hash"] ?></td>
 									<td><?= $block["status"] ?></td>
 									<td><?= (isset($block["time"])) ? $block["time"]." <small>(".$block["timeago"]." days ago)</small>"  : "" ?></td>
 									<td><?= $block['forklength'] ?></td>
-									<td><?= (isset($block["size"])) ? $block["size"] : "" ?></td>	
+									<td><?= (isset($block["size"])) ? $block["size"] : "" ?></td>
 									<td><?php
 									if(!empty($block['voting'])){
 										foreach($block['voting'] as $key => $vote){
 											echo '<button type="button" class="btn btn-default btn-xs">'.$key.'</button>';
-										}	
+										}
 									} ?>
-									</td>										
-									<td>																						
+									</td>
+									<td>
 										<div class="btn-group pull-left" style="padding:5px 0 3px 7px; margin-bottom:0px">
 											<button type="button" class="btn btn-default btn-xs">Details</button>
 											<button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -95,13 +95,12 @@
 												<span class="sr-only">Toggle Dropdown</span>
 										</button>
 										<ul class="dropdown-menu">
-										  <li><a href="https://bitcoin.jonasschnelli.ch/explorer/block/<?= $block["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Dumb Block Explorer</a></li>
-											<li><a href="https://blockchair.com/search?q=<?= $block["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Blockchair</a></li>
+										  <li><a href="https://www.groestlcoin.org/explorer/block/<?= $block["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Dumb Block Explorer</a></li>
 										</ul>
-										</div>										   
-									</td>										   
+										</div>
+									</td>
 								</tr>
-						<?php } ?>						
+						<?php } ?>
 					  </tbody>
 					</table>
 				  </div>
@@ -134,13 +133,13 @@
 	<!-- Datatables -->
 	<script>
 	  $(document).ready(function() {
-		
+
 		 $('#orhpanedblocks').DataTable( {
 			"order": [[ 0, "desc" ]],
 			"paging":   false,
 			"bInfo": false
 		} );
-		
+
 	  });
 	</script>
 	<!-- /Datatables -->

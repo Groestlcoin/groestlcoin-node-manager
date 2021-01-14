@@ -1,5 +1,5 @@
 		  <!-- Top Info Bar -->
-		 <div class="panel panel-default">  
+		 <div class="panel panel-default">
 			<div class="panel-body">
 				<div class="row tile_count">
 					<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -18,8 +18,8 @@
 					  <span class="count_bottom"><span><?= $content["avgSize"] ?> </span> MB avg. block size</span>
 					</div>
 					<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-					  <span class="count_top"><i class="fa fa-btc" style="color:orange;"></i> Total Fees</span>
-					  <div class="count"><?= $content["totalFees"] ?> <small>BTC</small></div>
+					  <span class="count_top">Total Fees</span>
+					  <div class="count"><?= $content["totalFees"] ?> <small>GRS</small></div>
 					  <span class="count_bottom"><span class="orange" ><?= $content["avgFee"] ?></span> avg. fees per block</span>
 					</div>
 					<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -42,9 +42,9 @@
       </div>
       <?php } ?>
       <!-- Message End -->
-			<!-- Content -->				   
+			<!-- Content -->
 			<div class="row">
-			
+
 			<!-- Peer List -->
 			  <div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -80,20 +80,20 @@
 							  foreach($content['blocks']  as $key => $block){ ?>
 									<tr>
 										<td><?= $key ?></td>
-										<td><?php if($block['asicboost']){ ?><i class="fa fa-tachometer" title="Miner uses overt AsicBoost"></i><?php } else{ ?><span style="padding-left:18px;"></span><?php } ?> <?= $block["hash"] ?></td>  
-										<td><?= $block["time"] ?> <small>(<?= $block["timeago"] ?> m ago)</small></td>  
+										<td><?php if($block['asicboost']){ ?><i class="fa fa-tachometer" title="Miner uses overt AsicBoost"></i><?php } else{ ?><span style="padding-left:18px;"></span><?php } ?> <?= $block["hash"] ?></td>
+										<td><?= $block["time"] ?> <small>(<?= $block["timeago"] ?> m ago)</small></td>
 										<td><?= $block["size"] ?></td>
-										<td><?= $block["fees"] ?></td>  	
+										<td><?= $block["fees"] ?></td>
 										<td><?= number_format($block["txcount"]) ?></td>
 										<td><?php
 										if(!empty($block['voting'])){
 											foreach($block['voting'] as $key => $vote){
 												echo '<button type="button" class="btn btn-default btn-xs">'.$key.'</button>';
-											}	
+											}
 										} ?>
-										</td>										
-										<td>																					  
-										   
+										</td>
+										<td>
+
 											<div class="btn-group pull-left" style="padding:5px 0 3px 7px; margin-bottom:0px">
 												<button type="button" class="btn btn-default btn-xs">Details</button>
 												<button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -101,17 +101,18 @@
 													<span class="sr-only">Toggle Dropdown</span>
 											</button>
 											<ul class="dropdown-menu">
-												<li><a href="https://www.blockchain.com/btc/block/<?= $block["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Blockchain.com</a></li>
-												<li><a href="https://live.blockcypher.com/btc/block/<?= $block["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> BlockCypher</a></li>
-												<li><a href="https://blockchair.com/bitcoin/block/<?= $block["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Blockchair</a></li>
-												<li><a href="https://www.smartbit.com.au/block/<?= $block["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Smartbit</a></li>
+												<li><a href="https://groestlsight.groestlcoin.org/block/<?= $block["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Groestlsight</a></li>
+												<li><a href="https://blockbook.groestlcoin.org/block/<?= $block["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Blockbook</a></li>
+												<li><a href="https://blockchair.com/groestlcoin/block/<?= $block["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Blockchair</a></li>
+												<li><a href="https://chainz.cryptoid.info/grs/block.dws?<?= $block["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Chainz</a></li>
+												<li><a href="https://esplora.groestlcoin.org/block/<?= $block["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Esplora</a></li>
 												 </ul>
-											</div>										   
-								   </td>										   
+											</div>
+								   </td>
 								  </tr>
 
-									  
-						<?php } ?>						
+
+						<?php } ?>
 					  </tbody>
 					</table>
 				  </div>
@@ -144,13 +145,13 @@
 	<!-- Datatables -->
 	<script>
 	  $(document).ready(function() {
-		
+
 		 $('#receivedblocks').DataTable( {
 			"order": [[ 0, "desc" ]],
 			"paging":   false,
 			"bInfo": false
 		} );
-		
+
 	  });
 	</script>
 	<!-- /Datatables -->

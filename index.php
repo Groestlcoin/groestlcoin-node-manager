@@ -3,9 +3,9 @@
 namespace App;
 
 // Error reporting
-error_reporting(E_ALL); 
-ini_set('ignore_repeated_errors', TRUE); 
-ini_set('display_startup_errors',TRUE); 
+error_reporting(E_ALL);
+ini_set('ignore_repeated_errors', TRUE);
+ini_set('display_startup_errors',TRUE);
 ini_set('display_errors', TRUE);
 
 // Security
@@ -22,7 +22,7 @@ Autoloader::register();
 // Check IP, deny access if not allowed
 if(!(empty(Config::ACCESS_IP) || $_SERVER['REMOTE_ADDR'] == "127.0.0.1" || $_SERVER['REMOTE_ADDR'] == "::1" || $_SERVER['REMOTE_ADDR'] == Config::ACCESS_IP)){
 	header('Location: login.html');
-	exit; 
+	exit;
 }
 
 // Cronjob Rule Run
@@ -41,25 +41,25 @@ $passToken = hash('sha256', Config::PASSWORD."ibe81rn6");
 // Active Session
 if(isset($_SESSION['login']) && $_SESSION['login'] === TRUE){
 	// Nothing needs to be done
-	
-// Login Cookie available	
+
+// Login Cookie available
 }elseif(isset($_COOKIE["Login"]) && $_COOKIE["Login"] == $passToken){
 		$_SESSION['login'] = TRUE;
 		$_SESSION["csfrToken"] = hash('sha256', random_bytes(20));
 
-// Login		
+// Login
 }elseif(!isset($_SESSION['login']) && isset($_POST['password']) && $_POST['password'] == Config::PASSWORD){
 	$passHashed = hash('sha256', Config::PASSWORD);
 		$_SESSION['login'] = TRUE;
 		$_SESSION["csfrToken"] = hash('sha256', random_bytes(20));
-		if(isset($_POST['stayloggedin'])){		
+		if(isset($_POST['stayloggedin'])){
 			setcookie("Login", $passToken, time()+2592000, "","",FALSE, TRUE);
 		}
 
 // Not logged in or invalid data
 }else{
 	header('Location: login.html');
-	exit; 	
+	exit;
 }
 
 // Load ulitily and content creator functions
@@ -74,17 +74,17 @@ $bitcoind = new jsonRPCClient('http://'.Config::RPC_USER.':'.Config::RPC_PASSWOR
 
 // Content
 // Main Page
-if(empty($_GET) || $_GET['p'] == "main") {   
+if(empty($_GET) || $_GET['p'] == "main") {
 	try{
     $content = createMainContent();
 	}catch(\Exception $e) {
 	   $error = "Node offline or incorrect RPC data";
 	}
-	$data = array('section' => 'main', 'title' => 'Home', 'content' => $content);   
-   
-// Peers Page   
+	$data = array('section' => 'main', 'title' => 'Home', 'content' => $content);
+
+// Peers Page
 }elseif($_GET['p'] == "peers") {
-	
+
 	// Check if command
 	if(isset($_GET['c']) && $_GET['t'] == $_SESSION["csfrToken"]){
 		// Ban Command
@@ -103,7 +103,7 @@ if(empty($_GET) || $_GET['p'] == "main") {
 			if($err == 0){
 				try {
 					$result = $bitcoind->setban($ip, "add", $bantime);
-					// Sleep necessary otherwise peer is still returned by bitcoin core
+					// Sleep necessary otherwise peer is still returned by groestlcoin core
 					sleep(1);
 					$message = "Peer successfully banned";
 				} catch (\Exception $e) {
@@ -112,14 +112,14 @@ if(empty($_GET) || $_GET['p'] == "main") {
 			}else{
 				$error = "Invalid Peer/Ban time";
 			}
-			
+
 		// Disconnect Command
 		}elseif($_GET['c'] == "disconnect"){
 			if(preg_match("/^(\[{0,1}[0-9a-z:\.]{7,39}\]{0,1}:[0-9]{1,5})$/", $_GET['ip'], $match)) {
 				$ip = $match[1];
 				try {
 					$result = $bitcoind->disconnectnode($ip);
-					// Sleep necessary otherwise peer is still returned by bitcoin core
+					// Sleep necessary otherwise peer is still returned by groestlcoin core
 					sleep(1);
 					$message = "Peer successfully disconnected";
 				} catch (\Exception $e) {
@@ -134,12 +134,12 @@ if(empty($_GET) || $_GET['p'] == "main") {
 				$hoster[] = $_GET['n'];
 				file_put_contents('data/hoster.json',json_encode($hoster));
 				updateHosted($_GET['n'], true);
-				$message = "Hoster succesfully added";	
+				$message = "Hoster succesfully added";
 			}else{
 				$error = "Invalid Hoster";
 			}
 		}
-		// Apply rules		  
+		// Apply rules
 		elseif($_GET['c'] == "run"){
 			try{
 				Rule::run();
@@ -156,13 +156,13 @@ if(empty($_GET) || $_GET['p'] == "main") {
 	}catch(\Exception $e) {
 	   $error = "Node offline or incorrect RPC data";
 	}
-	
+
 	// Create page specfic variables
 	$data = array('section' => 'peers', 'title' => 'Peers', 'content' => $content);
 
-// Hoster Page	
-}elseif($_GET['p'] == "hoster") {	
-	
+// Hoster Page
+}elseif($_GET['p'] == "hoster") {
+
 	$hosterList = json_decode(file_get_contents('data/hoster.json'),true);
 
 	if(isset($_GET['c']) && $_GET['t'] == $_SESSION["csfrToken"]){
@@ -171,12 +171,12 @@ if(empty($_GET) || $_GET['p'] == "main") {
 			if(preg_match("/^[0-9a-zA-Z-,\. ]{3,40}$/", $_GET['n'])) {
 				if(($key = array_search($_GET['n'], $hosterList)) != false) {
 					unset($hosterList[$key]);
-					file_put_contents('data/hoster.json',json_encode($hosterList)); 
+					file_put_contents('data/hoster.json',json_encode($hosterList));
 					updateHosted($_GET['n'], false);
-					$message = "Hoster succesfully removed";  
+					$message = "Hoster succesfully removed";
 				}else{
-					$error = "Hoster not found";	
-				}			
+					$error = "Hoster not found";
+				}
 			}else{
 				$error = "Invalid Hoster";
 			}
@@ -187,7 +187,7 @@ if(empty($_GET) || $_GET['p'] == "main") {
 					$hosterList[] = $_GET['n'];
 					file_put_contents('data/hoster.json',json_encode($hosterList));
 					updateHosted($_GET['n'], true);
-					$message = "Hoster succesfully added"; 
+					$message = "Hoster succesfully added";
 				}else{
 					$error = "Hoster already in list";
 				}
@@ -196,19 +196,19 @@ if(empty($_GET) || $_GET['p'] == "main") {
 			}
 		}
 	}
-	
+
 	$content = json_decode(file_get_contents('data/hoster.json'), TRUE);
 	// Sort Hoster ascending
 	natcasesort($content);
-	
+
 	// Create page specfic variables
 	$data = array('section' => 'hoster', 'title' => 'Hoster Manager', 'content' => $content);
-	
-// Ban List Page	
+
+// Ban List Page
 }elseif($_GET['p'] == "banlist") {
-	
-	// Check if commands needs to be run   
-	if(isset($_GET['c']) && $_GET['t'] == $_SESSION["csfrToken"]){	  
+
+	// Check if commands needs to be run
+	if(isset($_GET['c']) && $_GET['t'] == $_SESSION["csfrToken"]){
 		if($_GET['c'] == "unban"){
 			if(preg_match("/^([0-9a-z:\.]{7,39}\/[0-9]{1,3})$/", $_GET['ip'], $match)) {
 				$ip = $match[1];
@@ -251,22 +251,22 @@ if(empty($_GET) || $_GET['p'] == "main") {
 			}
 		}
 	}
-	
+
 	try{
     $content = createBanListContent();
 	}catch(\Exception $e) {
 	   $error = "Node offline or incorrect RPC data";
 	}
-	$data = array('section' => 'banlist', 'title' => 'Ban List', 'content' => $content);  
+	$data = array('section' => 'banlist', 'title' => 'Ban List', 'content' => $content);
 
 // Rules Page
 }elseif($_GET['p'] == "rules") {
-	
+
 	$editID = NULL;
-	// Check if commands needs to be run   
-	if(isset($_GET['c'])  && $_GET['t'] == $_SESSION["csfrToken"]){	  
-		// Save new or edited rule	
-		if($_GET['c'] == "save"){			
+	// Check if commands needs to be run
+	if(isset($_GET['c'])  && $_GET['t'] == $_SESSION["csfrToken"]){
+		// Save new or edited rule
+		if($_GET['c'] == "save"){
 			$rule = new Rule();
 			$response = $rule->save($_POST);
 				if($response){
@@ -274,7 +274,7 @@ if(empty($_GET) || $_GET['p'] == "main") {
 				}else{
 					$error = "Invalid rule data";
 				}
- 		// Apply rules		  
+ 		// Apply rules
 		}elseif($_GET['c'] == "run"){
 			try{
 				Rule::run();
@@ -284,28 +284,28 @@ if(empty($_GET) || $_GET['p'] == "main") {
 			if(empty($e)){
 				$message = "Rules succesfully run. See log file for details";
 			}
- 		// Edit rule		   
+ 		// Edit rule
 		}elseif($_GET['c'] == "edit"){
 			if(ctype_digit($_GET['id'])){
 				$editID = $_GET['id'];
 			}else{
 				$error = "Invalid rule ID";
 			}
- 		// Delete single rule or all		  
-		}elseif($_GET['c'] == "delete"){		 
+ 		// Delete single rule or all
+		}elseif($_GET['c'] == "delete"){
 			if(isset($_GET['id']) && ctype_digit($_GET['id'])){
 				$reponse =  Rule::deleteByID($_GET['id']);
 				if($reponse){
-					$message = "Rule succesfully deleted";					
+					$message = "Rule succesfully deleted";
 				}else{
-					$error = "Could not delete rule";   
+					$error = "Could not delete rule";
 			   }
 			}elseif(!isset($_GET['id'])){
 			   $reponse =  Rule::deleteAll();
 				if($reponse){
-					$message = "Rules succesfully deleted";					
+					$message = "Rules succesfully deleted";
 				}else{
-					$error = "Could not delete rules";   
+					$error = "Could not delete rules";
 			   }
 			}else{
 			   $error = "Invalid rule ID";
@@ -314,37 +314,37 @@ if(empty($_GET) || $_GET['p'] == "main") {
 		}elseif($_GET['c'] == "resetc"){
 			$reponse =  Rule::resetCounter();
 			if($reponse){
-					$message = "Counter succesfully reseted";					
+					$message = "Counter succesfully reseted";
 			}else{
-					$error = "Could not reseted counter";   
-			}			
+					$error = "Could not reseted counter";
+			}
 		// Delete logfile
 		}elseif($_GET['c'] == "dellog"){
 			$reponse =  Rule::deleteLogfile();
 			if($reponse){
-					$message = "Logfile succesfully deleted";					
+					$message = "Logfile succesfully deleted";
 			}else{
-					$error = "Could not delete logfile";   
+					$error = "Could not delete logfile";
 			}
 		}
   }
-  
+
   try{
     $content = createRulesContent($editID);
 	}catch(\Exception $e) {
 	   $error = "Node offline or incorrect RPC data";
 	}
 	$data = array('section' => 'rules', 'title' => 'Rules Manager', 'content' => $content);
-	 
-// Memory Pool Page	
-}elseif($_GET['p'] == "mempool") {	
+
+// Memory Pool Page
+}elseif($_GET['p'] == "mempool") {
   try{
     $content = createMempoolContent();
 	}catch(\Exception $e) {
 	   $error = "Node offline or incorrect RPC data";
 	}
 	$data = array('section' => 'mempool', 'title' => 'Memory Pool', 'content' => $content);
- 
+
 // Wallet Page
 }elseif($_GET['p'] == "wallet") {
   try{
@@ -353,8 +353,8 @@ if(empty($_GET) || $_GET['p'] == "main") {
 	  $error = "Node offline or incorrect RPC data";
 	}
 	$data = array('section' => 'wallet', 'title' => 'Wallet Overview', 'content' => $content);
- 
-// Blocks Page 
+
+// Blocks Page
 }elseif($_GET['p'] == "blocks") {
   try{
     $content = createBlocksContent();
@@ -362,8 +362,8 @@ if(empty($_GET) || $_GET['p'] == "main") {
 	   $error = "Node offline or incorrect RPC data";
 	}
 	$data = array('section' => 'blocks', 'title' => 'Blocks', 'content' => $content);
-  
-// Forks Page 
+
+// Forks Page
 }elseif($_GET['p'] == "forks") {
   try{
     $content = createForksContent();
@@ -371,8 +371,8 @@ if(empty($_GET) || $_GET['p'] == "main") {
 	   $error = "Node offline or incorrect RPC data";
 	}
 	$data = array('section' => 'forks', 'title' => 'Forks', 'content' => $content);
-  
-// Settings Page	
+
+// Settings Page
 }elseif($_GET['p'] == "settings") {
 	$geoPeers = Config::PEERS_GEO;
 	if(isset($_GET['c'])  && $_GET['t'] == $_SESSION["csfrToken"]){
@@ -398,13 +398,13 @@ if(empty($_GET) || $_GET['p'] == "main") {
   }
   $data = array('section' => 'settings', 'title' => 'Settings', 'geoPeers' => $geoPeers);
 
-// About Page	
+// About Page
 }elseif($_GET['p'] == "about") {
-	$data = array('section' => 'about', 'title' => 'About'); 
-	
+	$data = array('section' => 'about', 'title' => 'About');
+
 }else{
 	header('Location: index.php');
-	exit; 	
+	exit;
 }
 
 // Create HTML output

@@ -1,5 +1,5 @@
 	<!-- Top Info Bar -->
-	<div class="panel panel-default">  
+	<div class="panel panel-default">
 		<div class="panel-body">
 			<div class="row tile_count">
 				<div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
@@ -37,9 +37,9 @@
   </div>
   <?php } ?>
   <!-- Message End -->
-			<!-- Content -->				   
+			<!-- Content -->
 			<div class="row">
-			
+
 			<!-- Peer List -->
 			  <div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
@@ -75,12 +75,12 @@
 									<tr>
 										<td><?= $key+1 ?></td>
 										<td><small><?= number_format($utxo["amount"],8) ?></small></td>
-										<td><small><?= $utxo["address"] ?></small></td>  
-										<td><small><?= $utxo["hash"] ?></small></td>  
-										<td><small><?= $utxo["vout"] ?></small></td>  
+										<td><small><?= $utxo["address"] ?></small></td>
+										<td><small><?= $utxo["hash"] ?></small></td>
+										<td><small><?= $utxo["vout"] ?></small></td>
 										<td><small><?= $utxo["label"] ?></small></td>
-										<td><small><?= $utxo["confs"] ?></small></td>  	
-										<td> 
+										<td><small><?= $utxo["confs"] ?></small></td>
+										<td>
 											<div class="btn-group pull-left" style="padding:5px 0 3px 7px; margin-bottom:0px">
 												<button type="button" class="btn btn-default btn-xs">Details</button>
 												<button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -88,14 +88,16 @@
 													<span class="sr-only">Toggle Dropdown</span>
 												</button>
 												<ul class="dropdown-menu">
-												<li><a href="https://www.blockchain.com/btc/tx/<?= $utxo["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Blockchain.com</a></li>
-												<li><a href="https://live.blockcypher.com/btc/tx/<?= $utxo["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> BlockCypher</a></li>
-												<li><a href="https://www.smartbit.com.au/tx/<?= $utxo["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Smartbit</a></li>
+													<li><a href="https://groestlsight.groestlcoin.org/tx/<?= $utxo["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Groestlsight</a></li>
+													<li><a href="https://blockbook.groestlcoin.org/tx/<?= $utxo["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Blockbook</a></li>
+													<li><a href="https://blockchair.com/groestlcoin/transaction/<?= $utxo["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Blockchair</a></li>
+													<li><a href="https://chainz.cryptoid.info/grs/tx.dws?<?= $utxo["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Chainz</a></li>
+													<li><a href="https://esplora.groestlcoin.org/tx/<?= $utxo["hash"] ?>" target="_blank"><i class="fa fa-globe fa-lg" style="color:lightblue"></i> Esplora</a></li>
 												</ul>
-											</div>										   
-										</td> 
+											</div>
+										</td>
 									</tr>
-						<?php } } ?>						
+						<?php } } ?>
 					  </tbody>
 					</table>
 				  </div>
@@ -128,14 +130,14 @@
 	<!-- Datatables -->
 	<script>
 	  $(document).ready(function() {
-		
+
 		 $('#txmempool').DataTable( {
 			"paging":   false,
 			"bInfo": false,
 			"order": [],
 			"bFilter": false
 		} );
-		
+
 	  });
 	</script>
 	<!-- /Datatables -->

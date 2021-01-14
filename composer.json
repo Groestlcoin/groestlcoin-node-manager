@@ -1,20 +1,20 @@
 {
-  "name": "mirobit/bitcoin-node-manager",
-  "description": "Lightweight dashboard and control system for bitcoin nodes",
+  "name": "Groestlcoin/groestlcoin-node-manager",
+  "description": "Lightweight dashboard and control system for groestlcoin nodes",
   "keywords": [
-    "bitcoin",
+    "groestlcoin",
     "dashboard",
     "manager"
   ],
   "license": "MIT",
   "authors": [
     {
-      "name": "Michael Rotarius",
-      "homepage": "https://github.com/Mirobit/"
+      "name": "Groestlcoin Developers",
+      "homepage": "https://github.com/Groestlcoin/"
     }
   ],
   "support": {
-    "issues": "https://github.com/Mirobit/bitcoin-node-manager/issues"
+    "issues": "https://github.com/Groestlcoin/groestlcoin-node-manager/issues"
   },
   "type": "project",
   "require": {
